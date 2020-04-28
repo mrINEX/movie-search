@@ -1,0 +1,22 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+html {
+    font-size: 10px;
+}
+
+body {
+    color: darkslategray;
+    font-family: monospace, sans-serif;
+    @include font($size: 1.6rem, $weight: normal);
+}
+
+.event-none {
+    pointer-events: none;
+}
+
+.hidden {
+    display: none;
+}
