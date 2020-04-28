@@ -1,3 +1,5 @@
+require('./js/create');
+
 window.onload = () => {
-    console.log('load page');
-}
+  console.log('load page');
+};
