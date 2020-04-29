@@ -1,0 +1,17 @@
+@keyframes left {
+    from {
+        left: 0;
+    }
+    to {
+        left: -240px;
+    }
+}
+
+@keyframes right {
+    from {
+        left: 240px;
+    }
+    to {
+        left: 0;
+    }
+}

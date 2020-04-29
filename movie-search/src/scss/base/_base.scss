@@ -20,3 +20,26 @@ body {
 .hidden {
     display: none;
 }
+
+.to-left {
+    animation-duration: 3s;
+    animation-name: left;
+}
+
+.to-right {
+    animation-duration: 3s;
+    animation-name: right;
+    animation-direction: reverse;
+}
+
+.from-left {
+    animation-duration: 3s;
+    animation-name: left;
+    animation-direction: reverse;
+}
+
+.from-right {
+    animation-duration: 3s;
+    animation-name: right;
+
+}

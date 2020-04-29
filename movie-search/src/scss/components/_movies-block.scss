@@ -1,0 +1,69 @@
+.movies-block {
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    margin: 30px 0;
+}
+
+.arrow-left,
+.arrow-right {
+    position: absolute;
+    z-index: 5;
+    top: 50%;
+    width: 20px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.arrow-left {
+    left: 0;
+    background: url('../assets/img/arrows.png');
+    background-size: 38px;
+    background-repeat: no-repeat;
+    background-position-x: 0px;
+    background-position-y: -5px;
+}
+
+.arrow-right {
+    right: 0;
+    background: url('../assets/img/arrows.png');
+    background-size: 38px;
+    background-repeat: no-repeat;
+    background-position-x: -20px;
+    background-position-y: -5px;
+}
+
+.movie {
+    background: $color-main;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    text-align: center;
+    position: relative;
+    z-index: 4;
+    @extend %transition;
+    border: 10px solid white;
+    padding: 10px;
+}
+
+.movie__title {
+    @include font($size: unset, $weight: bold);
+}
+
+.movie_image {
+    width: 200px;
+    height: 300px;
+}
+
+.movie__rating {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.rating_star {
+    width: 30px;
+    height: 30px;
+    background: url('../assets/img/star.png');
+    background-size: cover;
+}

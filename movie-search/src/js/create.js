@@ -24,8 +24,31 @@ const main = createElement('main', {
   classList: ['main', 'wrapper'],
 });
 
+const searchBlock = createElement('div', {
+  classList: ['search-block'],
+});
+
 const inputSearch = createElement('input', {
   placeholder: 'search movie',
+  type: 'search',
+  classList: ['input-search'],
+});
+
+const notFinded = createElement('span', {
+  classList: ['not-finded'],
+  innerText: 'not finded',
+});
+
+const moviesBlock = createElement('div', {
+  classList: ['movies-block'],
+});
+
+const arrowLeft = createElement('div', {
+  classList: ['arrow-left'],
+});
+
+const arrowRight = createElement('div', {
+  classList: ['arrow-right'],
 });
 
 const footer = createElement('footer', {
@@ -55,10 +78,15 @@ const githubName = createElement('a', {
 document.querySelector('body').append(header);
 
 document.querySelector('body').append(main);
-main.append(inputSearch);
+main.append(searchBlock);
+searchBlock.append(inputSearch, notFinded);
+main.append(moviesBlock);
+moviesBlock.append(arrowLeft, arrowRight);
 
 document.querySelector('body').append(footer);
-footer.append(footerLeft);
-footer.append(footerRight);
-footerRight.append(githubIcon);
-footerRight.append(githubName);
+footer.append(footerLeft, footerRight);
+footerRight.append(githubIcon, githubName);
+
+module.exports = {
+  createElement,
+};
