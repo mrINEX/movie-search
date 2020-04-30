@@ -42,6 +42,10 @@ class Movie {
     movie.append(poster);
     movie.append(year);
     movie.append(rating);
+
+    movie.onclick = () => {
+      console.log(this.title);
+    };
   }
 }
 

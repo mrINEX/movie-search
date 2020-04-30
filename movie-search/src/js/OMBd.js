@@ -4,8 +4,10 @@ const KEY = '6bf18ca';
 const URL_API = 'http://www.omdbapi.com/';
 
 function getMovies(word) {
-  return (page) => {
+  let page = 1;
+  return () => {
     const url = `${URL_API}?s=${word}&page=${page}&apikey=${KEY}`;
+    page += 1;
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
@@ -20,6 +22,7 @@ function getMovies(word) {
       });
   };
 }
-const currentWords = getMovies('dream');
-currentWords(1);
-// currentWords(2);
+
+module.exports = {
+  getMovies,
+};
