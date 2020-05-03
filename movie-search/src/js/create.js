@@ -36,11 +36,14 @@ const inputSearch = createElement('input', {
 
 const notFinded = createElement('span', {
   classList: ['not-finded'],
-  innerText: 'not finded',
 });
 
 const moviesBlock = createElement('div', {
   classList: ['movies-block'],
+});
+
+const loader = createElement('div', {
+  classList: ['loader'],
 });
 
 const arrowLeft = createElement('div', {
@@ -81,7 +84,7 @@ document.querySelector('body').append(main);
 main.append(searchBlock);
 searchBlock.append(inputSearch, notFinded);
 main.append(moviesBlock);
-moviesBlock.append(arrowLeft, arrowRight);
+moviesBlock.append(loader, arrowLeft, arrowRight);
 
 document.querySelector('body').append(footer);
 footer.append(footerLeft, footerRight);

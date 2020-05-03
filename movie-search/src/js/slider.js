@@ -1,17 +1,16 @@
-let current = 0;
 let isEnabled = true;
 
 function prevMovie() {
   const movies = document.querySelectorAll('.movie');
+  const countHidden = [...movies].filter((el) => el.classList.contains('hidden'));
 
   if (isEnabled) {
     isEnabled = false;
     movies.forEach((node) => {
       node.classList.add('to-left');
     });
-    movies[current].onanimationend = () => {
-      movies[current].classList.add('hidden');
-      current += 1;
+    movies[countHidden.length].onanimationend = () => {
+      movies[countHidden.length].classList.add('hidden');
       movies.forEach((node) => {
         node.classList.remove('to-left');
       });
@@ -22,16 +21,16 @@ function prevMovie() {
 
 function nextMovie() {
   const movies = document.querySelectorAll('.movie');
+  const countHidden = [...movies].filter((el) => el.classList.contains('hidden'));
 
-  if (isEnabled && current > 0) {
+  if (isEnabled && countHidden.length > 0) {
     isEnabled = false;
-    current -= 1;
-    movies[current].classList.remove('hidden');
+    movies[countHidden.length - 1].classList.remove('hidden');
 
     movies.forEach((node) => {
       node.classList.add('from-left');
     });
-    movies[current].onanimationend = () => {
+    movies[countHidden.length - 1].onanimationend = () => {
       movies.forEach((node) => {
         node.classList.remove('from-left');
       });
@@ -67,10 +66,37 @@ function runSwipe(event) {
   event.preventDefault();
 }
 
+function startTouchSwipe(event) {
+  if (event.target.classList.contains('arrow-left')) {
+    prevMovie();
+  }
+  if (event.target.classList.contains('arrow-right')) {
+    nextMovie();
+  }
+  startX = event.changedTouches[0].clientX;
+  event.preventDefault();
+}
+
+function runTouchSwipe(event) {
+  const endX = event.changedTouches[0].clientX;
+  const distance = Math.abs(startX - endX);
+  if (distance > 50) {
+    if (startX > endX) {
+      prevMovie();
+    }
+    if (startX < endX) {
+      nextMovie();
+    }
+  }
+  event.preventDefault();
+}
+
 module.exports = {
   prevMovie,
   nextMovie,
   checkMovies,
   startSwipe,
   runSwipe,
+  startTouchSwipe,
+  runTouchSwipe,
 };

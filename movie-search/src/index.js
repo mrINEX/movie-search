@@ -1,9 +1,8 @@
 require('./js/create');
-require('./js/OMBd');
 const { translate } = require('./js/translate');
 const { getMovies } = require('./js/OMBd');
 const {
-  prevMovie, nextMovie, checkMovies, startSwipe, runSwipe,
+  prevMovie, nextMovie, checkMovies, startSwipe, runSwipe, startTouchSwipe, runTouchSwipe,
 } = require('./js/slider');
 
 window.onload = () => {
@@ -11,18 +10,18 @@ window.onload = () => {
   next();
 
   document.querySelector('.input-search').addEventListener('change', ({ target }) => {
+    const currentMovies = document.querySelectorAll('.movie');
+
     if (/[а-яА-Я]/.test(target.value)) {
       translate(target.value)
         .then((word) => {
-          document.querySelectorAll('.movie').forEach((el) => el.remove());
-          next = getMovies(word);
+          currentMovies.forEach((el) => el.remove());
+          next = getMovies(word, currentMovies);
           next();
         });
-    }
-
-    if (/[a-zA-Z]/.test(target.value)) {
-      document.querySelectorAll('.movie').forEach((el) => el.remove());
-      next = getMovies(target.value);
+    } else {
+      currentMovies.forEach((el) => el.remove());
+      next = getMovies(target.value, currentMovies);
       next();
     }
   });
@@ -35,9 +34,23 @@ window.onload = () => {
     nextMovie();
   });
 
-  document.querySelector('.movies-block').addEventListener('mousedown', startSwipe);
-  document.querySelector('.movies-block').addEventListener('mouseup', (event) => {
+  const movies = document.querySelector('.movies-block');
+
+  movies.addEventListener('mousedown', startSwipe);
+  movies.addEventListener('mouseup', (event) => {
     checkMovies(next);
     runSwipe(event);
+  });
+
+  movies.addEventListener('touchstart', (event) => {
+    checkMovies(next);
+    startTouchSwipe(event);
+  });
+  movies.addEventListener('touchmove', (event) => {
+    event.preventDefault();
+  });
+  movies.addEventListener('touchend', (event) => {
+    checkMovies(next);
+    runTouchSwipe(event);
   });
 };
