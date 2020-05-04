@@ -28,14 +28,27 @@ const searchBlock = createElement('div', {
   classList: ['search-block'],
 });
 
+const inputBlock = createElement('div', {
+  classList: ['input-block'],
+});
+
+const inputButton = createElement('div', {
+  classList: ['input-button'],
+  innerText: 'search',
+});
+
 const inputSearch = createElement('input', {
   placeholder: 'search movie',
   type: 'search',
   classList: ['input-search'],
 });
 
-const notFinded = createElement('span', {
+const notFinded = createElement('div', {
   classList: ['not-finded'],
+});
+
+const notification = createElement('div', {
+  classList: ['notification'],
 });
 
 const moviesBlock = createElement('div', {
@@ -82,7 +95,8 @@ document.querySelector('body').append(header);
 
 document.querySelector('body').append(main);
 main.append(searchBlock);
-searchBlock.append(inputSearch, notFinded);
+searchBlock.append(inputBlock, notFinded, notification);
+inputBlock.append(inputSearch, inputButton);
 main.append(moviesBlock);
 moviesBlock.append(loader, arrowLeft, arrowRight);
 

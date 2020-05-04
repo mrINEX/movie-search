@@ -20,3 +20,13 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+@keyframes opacity {
+    from {
+        opacity: 100%;
+    }
+    
+    to {
+        opacity: 30%;
+    }
+}

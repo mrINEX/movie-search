@@ -2,55 +2,81 @@ require('./js/create');
 const { translate } = require('./js/translate');
 const { getMovies } = require('./js/OMBd');
 const {
-  prevMovie, nextMovie, checkMovies, startSwipe, runSwipe, startTouchSwipe, runTouchSwipe,
+  prevMovie, nextMovie, startSwipe, runSwipe, startTouchSwipe, runTouchSwipe,
 } = require('./js/slider');
 
 window.onload = () => {
-  let next = getMovies('dream');
+  document.querySelector('.input-search').focus();
+  let response;
+  let next = getMovies('dark');
   next();
 
   document.querySelector('.input-search').addEventListener('change', ({ target }) => {
-    const currentMovies = document.querySelectorAll('.movie');
-
     if (/[а-яА-Я]/.test(target.value)) {
-      translate(target.value)
-        .then((word) => {
-          currentMovies.forEach((el) => el.remove());
-          next = getMovies(word, currentMovies);
-          next();
+      translate(target.value).then((word) => {
+        response = getMovies(word);
+        response().then((isCorrect) => {
+          if (isCorrect) {
+            document.querySelectorAll('.movie').forEach((movie) => movie.remove());
+            next = response;
+          }
         });
+      });
     } else {
-      currentMovies.forEach((el) => el.remove());
-      next = getMovies(target.value, currentMovies);
-      next();
+      response = getMovies(target.value);
+      response().then((isCorrect) => {
+        if (isCorrect) {
+          document.querySelectorAll('.movie').forEach((movie) => movie.remove());
+          next = response;
+        }
+      });
+    }
+  });
+
+  document.querySelector('.input-button').addEventListener('click', () => {
+    const input = document.querySelector('.input-search').value;
+    if (/[а-яА-Я]/.test(input)) {
+      translate(input).then((word) => {
+        response = getMovies(word);
+        response().then((isCorrect) => {
+          if (isCorrect) {
+            document.querySelectorAll('.movie').forEach((movie) => movie.remove());
+            next = response;
+          }
+        });
+      });
+    } else {
+      response = getMovies(input);
+      response().then((isCorrect) => {
+        if (isCorrect) {
+          document.querySelectorAll('.movie').forEach((movie) => movie.remove());
+          next = response;
+        }
+      });
     }
   });
 
   document.querySelector('.arrow-left').addEventListener('click', () => {
-    checkMovies(next);
-    prevMovie();
+    prevMovie(next);
   });
   document.querySelector('.arrow-right').addEventListener('click', () => {
-    nextMovie();
+    nextMovie(next);
   });
 
   const movies = document.querySelector('.movies-block');
 
   movies.addEventListener('mousedown', startSwipe);
   movies.addEventListener('mouseup', (event) => {
-    checkMovies(next);
-    runSwipe(event);
+    runSwipe(event, next);
   });
 
   movies.addEventListener('touchstart', (event) => {
-    checkMovies(next);
-    startTouchSwipe(event);
+    startTouchSwipe(event, next);
   });
   movies.addEventListener('touchmove', (event) => {
     event.preventDefault();
   });
   movies.addEventListener('touchend', (event) => {
-    checkMovies(next);
-    runTouchSwipe(event);
+    runTouchSwipe(event, next);
   });
 };
