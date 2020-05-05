@@ -26,7 +26,6 @@ function getMovies(word) {
                 cardMovie.createMovie();
               });
           });
-          document.querySelector('.loader').classList.add('hidden');
           document.querySelector('.input-search').value = word;
           const notification = document.querySelector('.notification');
           if (notification.children.length === 1) {

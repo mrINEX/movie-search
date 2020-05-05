@@ -13,7 +13,7 @@ class Movie {
 
   createMovie() {
     const movie = createElement('div', {
-      classList: ['movie'],
+      classList: ['movie', 'movie-opacity'],
     });
 
     const title = createElement('a', {
@@ -24,10 +24,10 @@ class Movie {
 
     const poster = createElement('div', {
       classList: ['movie_image'],
-    }, {
-      background: `url(${this.poster === 'N/A' ? '../src/assets/img/noposter.jpg' : this.poster})`,
-      'background-position': 'center',
-      'background-size': 'cover',
+    });
+
+    const posterImg = createElement('img', {
+      src: `${this.poster === 'N/A' ? '../src/assets/img/noposter.jpg' : this.poster}`,
     });
 
     const year = createElement('span', {
@@ -41,13 +41,15 @@ class Movie {
 
     movie.append(title);
     movie.append(poster);
+    poster.append(posterImg);
     movie.append(year);
     movie.append(rating);
     document.querySelector('.movies-block').append(movie);
 
-    poster.onload = () => {
-      console.log(movie);
-    };
+    posterImg.addEventListener('load', () => {
+      document.querySelector('.loader').classList.add('hidden');
+      movie.classList.remove('movie-opacity');
+    });
   }
 }
 

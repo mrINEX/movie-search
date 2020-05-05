@@ -50,6 +50,14 @@
     width: 240px;
 }
 
+.movie-opacity {
+    opacity: 0;
+    -webkit-transition: opacity 150ms;
+    -moz-transition: opacity 150ms;
+    -ms-transition: opacity 150ms;
+    transition: opacity 150ms;
+}
+
 .movie__title {
     padding-bottom: 10px;
     @include font($size: unset, $weight: bold);
@@ -58,6 +66,15 @@
 .movie_image {
     width: 200px;
     height: 300px;
+    position: relative;
+    padding-top: 75%;
+    overflow: hidden;
+    img{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
 }
 
 .movie__rating {

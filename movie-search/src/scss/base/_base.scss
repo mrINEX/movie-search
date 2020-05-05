@@ -30,6 +30,9 @@ body {
     animation: spin 2s linear infinite;
     align-self: center;
     margin: auto;
+    position: absolute;
+    left: calc(50% - 60px);
+    z-index: 10;
 }
 
 .to-left {
