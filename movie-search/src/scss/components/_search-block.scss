@@ -11,13 +11,13 @@
 }
 
 .input-button {
-    padding: 5px;
-    background: $color-main;
-    @include font($size: 1.8rem, $weight: bold);
-    border: 1px solid $color-main;
     cursor: pointer;
+    color: darkslategray;
+    font-family: monospace, sans-serif;
+    @include font($size: 1.6rem, $weight: bold);
     &:hover {
-        border: 1px solid #c5bbbb;
+        background: $color-main;
+        border: 2px solid $color-main;
     }
 }
 

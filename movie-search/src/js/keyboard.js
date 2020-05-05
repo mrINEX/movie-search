@@ -2,7 +2,7 @@ const first = [['~', '`'], ['!', '1'], ['@', '2'], ['#', '3'], ['$', '4'], ['%',
 const second = [['Tab'], ['Q', 'q'], ['W', 'w'], ['E', 'e'], ['R', 'r'], ['T', 't'], ['Y', 'y'], ['U', 'u'], ['I', 'i'], ['O', 'o'], ['P', 'p'], ['{', '['], ['}', ']'], ['|', '\\\\']];
 const third = [['CapsLock'], ['A', 'a'], ['S', 's'], ['D', 'd'], ['F', 'f'], ['G', 'g'], ['H', 'h'], ['J', 'j'], ['K', 'k'], ['L', 'l'], [':', ';'], ['"', "'"], ['Enter']];
 const fourth = [['Shift'], ['Z', 'z'], ['X', 'x'], ['C', 'c'], ['V', 'v'], ['B', 'b'], ['N', 'n'], ['M', 'm'], ['<', ','], ['>', '.'], ['?', '/'], ['&#8593;'], ['Shift']];
-const fifth = ['Ctrl', 'Win', 'Alt', ' ', 'Alt', '&#8594;', '&#8595;', '&#8594;', 'Ctrl'];
+const fifth = ['Ctrl', 'Win', 'Alt', ' ', 'Alt', '&#8592;', '&#8595;', '&#8594;', 'Ctrl'];
 
 const ru1 = [['ё', 'Ё'], ['1', '!'], ['2', '"'], ['3', '№'], ['4', ';'], ['5', '%'], ['6', ':'], ['7', '?'], ['8', '*'], ['9', '('], ['0', ')'], ['-', '_'], ['=', '+'], ['й', 'Й'], ['ц', 'Ц'], ['у', 'У'], ['к', 'К'], ['е', 'Е'], ['н', 'Н'], ['г', 'Г'], ['ш', 'Ш'], ['щ', 'Щ'], ['з', 'З'], ['х', 'Х'], ['ъ', 'Ъ'], ['\\', '/'], ['ф', 'Ф'], ['ы', 'Ы'], ['в', 'В'], ['а', 'А'], ['п', 'П'], ['р', 'Р'], ['о', 'О'], ['л', 'Л'], ['д', 'Д'], ['ж', 'Ж'], ['э', 'Э'], ['я', 'Я'], ['ч', 'Ч'], ['с', 'С'], ['м', 'М'], ['и', 'И'], ['т', 'Т'], ['ь', 'Ь'], ['б', 'Б'], ['ю', 'Ю'], ['.', ',']];
 const en1 = [['~', '`'], ['!', '1'], ['@', '2'], ['#', '3'], ['$', '4'], ['%', '5'], ['^', '6'], ['&', '7'], ['*', '8'], ['(', '9'], [')', '0'], ['_', '-'], ['+', '='], ['Q', 'q'], ['W', 'w'], ['E', 'e'], ['R', 'r'], ['T', 't'], ['Y', 'y'], ['U', 'u'], ['I', 'i'], ['O', 'o'], ['P', 'p'], ['{', '['], ['}', ']'], ['|', '\\'], ['A', 'a'], ['S', 's'], ['D', 'd'], ['F', 'f'], ['G', 'g'], ['H', 'h'], ['J', 'j'], ['K', 'k'], ['L', 'l'], [':', ';'], ['"', "'"], ['Z', 'z'], ['X', 'x'], ['C', 'c'], ['V', 'v'], ['B', 'b'], ['N', 'n'], ['M', 'm'], ['<', ','], ['>', '.'], ['?', '/']];
@@ -28,7 +28,6 @@ runRow(row5, fifth, main);
 
 const upperCharts = document.querySelectorAll('.up');
 const downCharts = document.querySelectorAll('.down');
-const capsLock = document.querySelector('.CapsLock');
 const textarea = document.querySelector('.input-search');
 const lang = localStorage.getItem('lang');
 
@@ -47,25 +46,47 @@ if (lang === 'ru') {
 
 // click case
 window.addEventListener('click', ({ target }) => {
+  console.log(target);
   if (target.parentNode.classList.contains('button')) {
-    setTimeout(() => {
-      target.parentNode.removeAttribute('style');
-    }, 200);
     if (target.innerHTML === 'Backspace') {
       textarea.value = textarea.value.replace(/.$|\n$/, '');
     } else if (target.id === ' ') {
       textarea.value += ' ';
     } else if (target.innerHTML === 'Tab') {
       textarea.value += '  ';
-    } else if (target.innerHTML !== 'Shift') {
+    } else if (target.classList.contains('Win')) {
+      if (upperCharts[0].innerHTML === 'Ё') {
+        for (let i = 0; i < upperCharts.length; i += 1) {
+          upperCharts[i].innerHTML = `${en1[i][0]}`;
+          downCharts[i].innerHTML = `${en1[i][1]}`;
+        }
+        localStorage.setItem('lang', 'en');
+      } else {
+        for (let i = 0; i < upperCharts.length; i += 1) {
+          upperCharts[i].innerHTML = `${ru1[i][1]}`;
+          downCharts[i].innerHTML = `${ru1[i][0]}`;
+        }
+        localStorage.setItem('lang', 'ru');
+      }
+    } else if (target.innerHTML === 'CapsLock') {
+      if (target.classList.contains('active-capslock')) {
+        target.classList.remove('active-capslock');
+        upperCharts.forEach((node) => node.classList.add('hidden'));
+        downCharts.forEach((node) => node.classList.remove('hidden'));
+      } else {
+        upperCharts.forEach((node) => node.classList.remove('hidden'));
+        downCharts.forEach((node) => node.classList.add('hidden'));
+        target.classList.add('active-capslock');
+      }
+    } else if (target.innerHTML !== 'Shift' && target.innerHTML !== 'Enter' && target.innerHTML !== 'Ctrl' && target.innerHTML !== 'Alt') {
       textarea.value += target.innerHTML;
     }
   }
 });
 
 window.addEventListener('keydown', (event) => {
-  if (event.shiftKey) {
-    if (event.altKey && upperCharts[0].innerHTML === 'Ё') {
+  if (event.altKey && event.shiftKey) {
+    if (upperCharts[0].innerHTML === 'Ё') {
       for (let i = 0; i < upperCharts.length; i += 1) {
         upperCharts[i].innerHTML = `${en1[i][0]}`;
         downCharts[i].innerHTML = `${en1[i][1]}`;

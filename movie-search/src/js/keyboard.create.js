@@ -16,6 +16,8 @@ function drawRow(row, position, attach) {
       const span = create('span', 'word');
       if (position[i] === ' ') { span.classList.add('\\'); } else { span.classList.add(`${position[i]}`); }
       span.innerHTML = position[i];
+      if (row[i] === 'MetaLeft') { span.innerHTML = ''; }
+      if (row[i] === 'Enter') { span.classList.add('virtual-enter'); }
       dbutt.append(span);
     } else {
       for (let j = 0; j < position[i].length; j += 1) {

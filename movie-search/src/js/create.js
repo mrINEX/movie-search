@@ -32,9 +32,10 @@ const inputBlock = createElement('div', {
   classList: ['input-block'],
 });
 
-const inputButton = createElement('div', {
+const inputButton = createElement('input', {
   classList: ['input-button'],
-  innerText: 'search',
+  type: 'button',
+  value: 'SEARCH',
 });
 
 const inputKeyboard = createElement('img', {
@@ -53,7 +54,7 @@ inputKeyboard.onclick = () => {
 
 const inputSearch = createElement('input', {
   placeholder: 'search movie',
-  type: 'search',
+  type: 'text',
   classList: ['input-search'],
 });
 
