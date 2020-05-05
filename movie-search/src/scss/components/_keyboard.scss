@@ -1,0 +1,76 @@
+.keyboard-icon {
+    height: 100%;
+    border: 1px solid #c5bbbb;
+    border-right: 0;
+    border-left: 0;
+    cursor: pointer;
+}
+
+.keyboard-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.keyboard {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(2, 23, 31);
+    padding: 0.5vw;
+    border-radius: 1vw;
+    box-shadow: 0 0 4px rgba(0,0,21,1.12), 0 8px 10px rgba(0,0,0,3.24);
+    position: absolute;
+    z-index: 5;
+    @include font($size: 2.8vw, $weight: bold);
+}
+
+.button {
+    overflow: hidden;
+    margin: 1px;
+    cursor: pointer;
+    border-radius: 0.5vw;
+    background-color: rgb(240, 245, 247);
+    border: 1px solid rgb(226, 223, 223);
+    display: flex;
+}
+
+.row {
+    display: inline-flex;
+    justify-content: space-between;
+}
+
+.down,
+.up {
+    padding: 0 1.2vw;
+}
+
+.word {
+    padding: 0 0.8vw;
+}
+
+.\\ {
+    padding: 0 13vw;
+}
+
+.ShiftRight {
+    .Shift {
+        padding: 0 1.7vw;
+    }
+}
+
+.ShiftLeft {
+    .Shift {
+        padding: 0 3vw;
+    }
+}
+
+.Backslash {
+    span {
+        padding: 0 3.2vw;
+    }
+}
+
+.Tab {
+    span {
+        padding: 0 2.8vw;
+    }
+}

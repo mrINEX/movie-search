@@ -1,4 +1,5 @@
 require('./js/create');
+require('./js/keyboard');
 const { translate } = require('./js/translate');
 const { getMovies } = require('./js/OMBd');
 const {

@@ -6,13 +6,13 @@
 .input-block {
     display: flex;
     padding: 10px;
+    position: relative;
+    height: 50px;
 }
 
 .input-button {
-    padding: 10px;
+    padding: 5px;
     background: $color-main;
-    border-radius: 0 10px 10px 0;
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
     @include font($size: 1.8rem, $weight: bold);
     border: 1px solid $color-main;
     cursor: pointer;
@@ -33,16 +33,14 @@
 
 .input-search {
     width: 100%;
-    padding-left: 40px;
-    @include font($size: larger, $weight: normal);
+    padding-left: 30px;
+    @include font($size: 1.8rem, $weight: normal);
     background: url('../assets/img/search-icon.png');
-    background-size: 23px;
+    background-size: 20px;
     background-repeat: no-repeat;
     background-position: left;
     background-position-x: 6px;
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
     border: 1px solid #c5bbbb;
-    border-radius: 10px 0 0 10px;
     border-right: 0;
 }
 

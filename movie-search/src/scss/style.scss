@@ -7,11 +7,13 @@
 // layouts
 @import "./layouts/wrapper";
 @import "./layouts/header";
+@import "./layouts/main";
 @import "./layouts/footer";
 
 // components
 @import "./components/search-block";
 @import "./components//movies-block";
+@import "./components/keyboard";
 
 // bases
 @import "./base/base";

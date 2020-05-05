@@ -37,6 +37,20 @@ const inputButton = createElement('div', {
   innerText: 'search',
 });
 
+const inputKeyboard = createElement('img', {
+  classList: ['keyboard-icon'],
+  src: './src/assets/img/keyboard.png',
+});
+
+inputKeyboard.onclick = () => {
+  const keyboard = document.querySelector('.keyboard-wrapper');
+  if (keyboard.classList.contains('hidden')) {
+    keyboard.classList.remove('hidden');
+  } else {
+    keyboard.classList.add('hidden');
+  }
+};
+
 const inputSearch = createElement('input', {
   placeholder: 'search movie',
   type: 'search',
@@ -96,7 +110,7 @@ document.querySelector('body').append(header);
 document.querySelector('body').append(main);
 main.append(searchBlock);
 searchBlock.append(inputBlock, notFinded, notification);
-inputBlock.append(inputSearch, inputButton);
+inputBlock.append(inputSearch, inputKeyboard, inputButton);
 main.append(moviesBlock);
 moviesBlock.append(loader, arrowLeft, arrowRight);
 
