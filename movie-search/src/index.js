@@ -1,20 +1,60 @@
 require('./js/create');
 require('./js/keyboard');
-const { findMovies, next } = require('./js/OMBd');
+const { translate } = require('./js/translate');
+const { getMovies } = require('./js/OMBd');
 const {
   prevMovie, nextMovie, startSwipe, runSwipe, startTouchSwipe, runTouchSwipe,
 } = require('./js/slider');
 
 window.onload = () => {
+  let response;
+  let next = getMovies('dark');
+  next();
   document.querySelector('.input-search').focus();
 
   document.querySelector('.input-search').addEventListener('change', ({ target }) => {
-    findMovies(target.value);
+    if (/[а-яА-Я]/.test(target.value)) {
+      translate(target.value).then((word) => {
+        response = getMovies(word);
+        response().then((isCorrect) => {
+          if (isCorrect) {
+            document.querySelectorAll('.movie').forEach((movie) => movie.remove());
+            next = response;
+          }
+        });
+      });
+    } else {
+      response = getMovies(target.value);
+      response().then((isCorrect) => {
+        if (isCorrect) {
+          document.querySelectorAll('.movie').forEach((movie) => movie.remove());
+          next = response;
+        }
+      });
+    }
   });
 
   document.querySelector('.virtual-enter').addEventListener('click', () => {
     const input = document.querySelector('.input-search').value;
-    findMovies(input);
+    if (/[а-яА-Я]/.test(input)) {
+      translate(input).then((word) => {
+        response = getMovies(word);
+        response().then((isCorrect) => {
+          if (isCorrect) {
+            document.querySelectorAll('.movie').forEach((movie) => movie.remove());
+            next = response;
+          }
+        });
+      });
+    } else {
+      response = getMovies(input);
+      response().then((isCorrect) => {
+        if (isCorrect) {
+          document.querySelectorAll('.movie').forEach((movie) => movie.remove());
+          next = response;
+        }
+      });
+    }
   });
 
   document.querySelector('.arrow-left').addEventListener('click', () => {

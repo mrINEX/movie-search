@@ -36,7 +36,10 @@ class Movie {
 
     const rating = createElement('div', {
       classList: ['movie__rating'],
-      innerHTML: `<span class="rating_star"></span><span>${this.rating}</span>`,
+      innerHTML: `
+        <span class="rating_star"></span>
+        <span>${this.rating === 'N/A' ? 'no stars' : this.rating}</span>
+      `,
     });
 
     movie.append(title);

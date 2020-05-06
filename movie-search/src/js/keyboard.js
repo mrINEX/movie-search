@@ -31,7 +31,6 @@ const downCharts = document.querySelectorAll('.down');
 const textarea = document.querySelector('.input-search');
 const lang = localStorage.getItem('lang');
 
-// localstorage ------------------------------------------
 if (lang === 'ru') {
   for (let i = 0; i < upperCharts.length; i += 1) {
     upperCharts[i].innerHTML = `${ru1[i][1]}`;
@@ -44,16 +43,62 @@ if (lang === 'ru') {
   }
 }
 
-// click case
-window.addEventListener('click', ({ target }) => {
-  console.log(target);
+document.addEventListener('keydown', (event) => {
+  document.querySelector('.input-search').focus();
+  document.querySelector(`.${event.code}`).classList.add('keyboard-code-active');
+  if (event.altKey && event.shiftKey) {
+    if (upperCharts[0].innerHTML === 'Ё') {
+      for (let i = 0; i < upperCharts.length; i += 1) {
+        upperCharts[i].innerHTML = `${en1[i][0]}`;
+        downCharts[i].innerHTML = `${en1[i][1]}`;
+      }
+      localStorage.setItem('lang', 'en');
+    } else {
+      for (let i = 0; i < upperCharts.length; i += 1) {
+        upperCharts[i].innerHTML = `${ru1[i][1]}`;
+        downCharts[i].innerHTML = `${ru1[i][0]}`;
+      }
+      localStorage.setItem('lang', 'ru');
+    }
+  }
+});
+
+document.addEventListener('keyup', (event) => {
+  document.querySelector(`.${event.code}`).classList.remove('keyboard-code-active');
+});
+
+document.querySelector('.keyboard').addEventListener('mousedown', ({ target }) => {
+  event.preventDefault();
+  document.querySelector('.input-search').focus();
   if (target.parentNode.classList.contains('button')) {
+    document.querySelector(`.${target.parentNode.classList[1]}`).classList.add('keyboard-code-active');
+
     if (target.innerHTML === 'Backspace') {
-      textarea.value = textarea.value.replace(/.$|\n$/, '');
+      if (textarea.selectionStart !== textarea.selectionEnd) {
+        textarea.setRangeText('', [textarea.selectionStart], [textarea.selectionEnd], ['end']);
+      } else {
+        textarea.setRangeText('', [textarea.selectionStart - 1], [textarea.selectionEnd], ['end']);
+      }
     } else if (target.id === ' ') {
       textarea.value += ' ';
     } else if (target.innerHTML === 'Tab') {
       textarea.value += '  ';
+    } else if (target.classList.contains('&#8593;') || target.classList.contains('&#8595;')) {
+      textarea.value += '';
+    } else if (target.classList.contains('&#8592;')) {
+      if (textarea.selectionStart === textarea.selectionEnd) {
+        textarea.selectionStart -= 1;
+        textarea.selectionEnd -= 1;
+      } else {
+        textarea.selectionEnd = textarea.selectionStart;
+      }
+    } else if (target.classList.contains('&#8594;')) {
+      if (textarea.selectionStart === textarea.selectionEnd) {
+        textarea.selectionEnd += 1;
+        textarea.selectionStart += 1;
+      } else {
+        textarea.selectionStart = textarea.selectionEnd;
+      }
     } else if (target.classList.contains('Win')) {
       if (upperCharts[0].innerHTML === 'Ё') {
         for (let i = 0; i < upperCharts.length; i += 1) {
@@ -79,25 +124,14 @@ window.addEventListener('click', ({ target }) => {
         target.classList.add('active-capslock');
       }
     } else if (target.innerHTML !== 'Shift' && target.innerHTML !== 'Enter' && target.innerHTML !== 'Ctrl' && target.innerHTML !== 'Alt') {
-      textarea.value += target.innerHTML;
+      textarea.value += target.textContent;
     }
   }
 });
 
-window.addEventListener('keydown', (event) => {
-  if (event.altKey && event.shiftKey) {
-    if (upperCharts[0].innerHTML === 'Ё') {
-      for (let i = 0; i < upperCharts.length; i += 1) {
-        upperCharts[i].innerHTML = `${en1[i][0]}`;
-        downCharts[i].innerHTML = `${en1[i][1]}`;
-      }
-      localStorage.setItem('lang', 'en');
-    } else {
-      for (let i = 0; i < upperCharts.length; i += 1) {
-        upperCharts[i].innerHTML = `${ru1[i][1]}`;
-        downCharts[i].innerHTML = `${ru1[i][0]}`;
-      }
-      localStorage.setItem('lang', 'ru');
-    }
+document.querySelector('.keyboard').addEventListener('mouseup', ({ target }) => {
+  event.preventDefault();
+  if (target.parentNode.classList.contains('button')) {
+    document.querySelector(`.${target.parentNode.classList[1]}`).classList.remove('keyboard-code-active');
   }
 });

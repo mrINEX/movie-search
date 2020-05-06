@@ -54,7 +54,7 @@ inputKeyboard.onclick = () => {
 
 const inputSearch = createElement('input', {
   placeholder: 'search movie',
-  type: 'text',
+  type: 'search',
   classList: ['input-search'],
 });
 
