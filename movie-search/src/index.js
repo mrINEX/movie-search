@@ -7,14 +7,15 @@ const {
 } = require('./js/slider');
 
 window.onload = () => {
-  let next = getMovies('age');
-  next();
   const input = document.querySelector('.input-search');
-  let storageValue = input.value;
+  let storageValue = 'dark';
   let response;
+  let next = getMovies('dark');
+  next();
 
   input.addEventListener('blur', () => {
-    if (!document.querySelector('.keyboard-wrapper').classList.contains('hidden') && storageValue !== input.value) {
+    const isHide = document.querySelector('.keyboard-wrapper').classList.contains('hidden');
+    if (!isHide && storageValue !== input.value) {
       if (/[а-яА-Я]/.test(input.value)) {
         translate(input.value).then((word) => {
           response = getMovies(word);
@@ -63,15 +64,21 @@ window.onload = () => {
   });
 
   document.querySelector('.virtual-enter').addEventListener('click', () => {
-    if (/[а-яА-Я]/.test(input.value)) {
-      translate(input.value).then((word) => {
-        response = getMovies(word);
+    const isHide = document.querySelector('.keyboard-wrapper').classList.contains('hidden');
+    if (!isHide && storageValue !== input.value) {
+      if (/[а-яА-Я]/.test(input.value)) {
+        translate(input.value).then((word) => {
+          response = getMovies(word);
+          isNext(response).then((value) => { if (value) { next = response; } });
+        });
+      } else {
+        response = getMovies(input.value);
         isNext(response).then((value) => { if (value) { next = response; } });
-      });
+      }
     } else {
-      response = getMovies(input.value);
-      isNext(response).then((value) => { if (value) { next = response; } });
+      document.querySelector('.keyboard-wrapper').classList.add('hidden');
     }
+    storageValue = input.value;
   });
 
   document.querySelector('.arrow-left').addEventListener('click', () => {
