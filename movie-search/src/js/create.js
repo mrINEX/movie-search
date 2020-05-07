@@ -43,9 +43,11 @@ const inputKeyboard = createElement('img', {
   src: './src/assets/img/keyboard.png',
 });
 
-inputKeyboard.onclick = () => {
+inputKeyboard.onmousedown = (event) => {
+  event.preventDefault();
   const keyboard = document.querySelector('.keyboard-wrapper');
   if (keyboard.classList.contains('hidden')) {
+    document.querySelector('.input-search').focus();
     keyboard.classList.remove('hidden');
   } else {
     keyboard.classList.add('hidden');
@@ -56,6 +58,7 @@ const inputSearch = createElement('input', {
   placeholder: 'search movie',
   type: 'search',
   classList: ['input-search'],
+  autofocus: ' ',
 });
 
 const notFinded = createElement('div', {

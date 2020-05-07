@@ -1,59 +1,76 @@
 require('./js/create');
 require('./js/keyboard');
 const { translate } = require('./js/translate');
-const { getMovies } = require('./js/OMBd');
+const { getMovies, isNext } = require('./js/OMBd');
 const {
   prevMovie, nextMovie, startSwipe, runSwipe, startTouchSwipe, runTouchSwipe,
 } = require('./js/slider');
 
 window.onload = () => {
-  let response;
-  let next = getMovies('dark');
+  let next = getMovies('age');
   next();
-  document.querySelector('.input-search').focus();
+  const input = document.querySelector('.input-search');
+  let storageValue = input.value;
+  let response;
 
-  document.querySelector('.input-search').addEventListener('change', ({ target }) => {
+  input.addEventListener('blur', () => {
+    if (!document.querySelector('.keyboard-wrapper').classList.contains('hidden') && storageValue !== input.value) {
+      if (/[а-яА-Я]/.test(input.value)) {
+        translate(input.value).then((word) => {
+          response = getMovies(word);
+          isNext(response).then((value) => { if (value) { next = response; } });
+        });
+      } else {
+        response = getMovies(input.value);
+        isNext(response).then((value) => { if (value) { next = response; } });
+      }
+    } else {
+      document.querySelector('.keyboard-wrapper').classList.add('hidden');
+    }
+    storageValue = input.value;
+  });
+
+  document.addEventListener('keydown', ({ code }) => {
+    if (code === 'Enter') {
+      const isHide = document.querySelector('.keyboard-wrapper').classList.contains('hidden');
+      if (storageValue !== input.value && !isHide) {
+        if (/[а-яА-Я]/.test(input.value)) {
+          translate(input.value).then((word) => {
+            response = getMovies(word);
+            isNext(response).then((value) => { if (value) { next = response; } });
+          });
+        } else {
+          response = getMovies(input.value);
+          isNext(response).then((value) => { if (value) { next = response; } });
+        }
+      } else {
+        document.querySelector('.keyboard-wrapper').classList.add('hidden');
+      }
+      storageValue = input.value;
+    }
+  });
+
+  input.addEventListener('change', ({ target }) => {
     if (/[а-яА-Я]/.test(target.value)) {
       translate(target.value).then((word) => {
         response = getMovies(word);
-        response().then((isCorrect) => {
-          if (isCorrect) {
-            document.querySelectorAll('.movie').forEach((movie) => movie.remove());
-            next = response;
-          }
-        });
+        isNext(response).then((value) => { if (value) { next = response; } });
       });
     } else {
       response = getMovies(target.value);
-      response().then((isCorrect) => {
-        if (isCorrect) {
-          document.querySelectorAll('.movie').forEach((movie) => movie.remove());
-          next = response;
-        }
-      });
+      isNext(response).then((value) => { if (value) { next = response; } });
     }
   });
 
   document.querySelector('.virtual-enter').addEventListener('click', () => {
-    const input = document.querySelector('.input-search').value;
-    if (/[а-яА-Я]/.test(input)) {
-      translate(input).then((word) => {
+    if (/[а-яА-Я]/.test(input.value)) {
+      translate(input.value).then((word) => {
         response = getMovies(word);
-        response().then((isCorrect) => {
-          if (isCorrect) {
-            document.querySelectorAll('.movie').forEach((movie) => movie.remove());
-            next = response;
-          }
-        });
+        isNext(response).then((value) => { if (value) { next = response; } });
       });
     } else {
-      response = getMovies(input);
-      response().then((isCorrect) => {
-        if (isCorrect) {
-          document.querySelectorAll('.movie').forEach((movie) => movie.remove());
-          next = response;
-        }
-      });
+      response = getMovies(input.value);
+      isNext(response).then((value) => { if (value) { next = response; } });
     }
   });
 

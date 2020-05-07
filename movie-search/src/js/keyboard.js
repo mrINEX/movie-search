@@ -69,7 +69,6 @@ document.addEventListener('keyup', (event) => {
 
 document.querySelector('.keyboard').addEventListener('mousedown', ({ target }) => {
   event.preventDefault();
-  document.querySelector('.input-search').focus();
   if (target.parentNode.classList.contains('button')) {
     document.querySelector(`.${target.parentNode.classList[1]}`).classList.add('keyboard-code-active');
 
@@ -80,11 +79,11 @@ document.querySelector('.keyboard').addEventListener('mousedown', ({ target }) =
         textarea.setRangeText('', [textarea.selectionStart - 1], [textarea.selectionEnd], ['end']);
       }
     } else if (target.id === ' ') {
-      textarea.value += ' ';
+      textarea.setRangeText(' ', [textarea.selectionStart], [textarea.selectionEnd], ['end']);
     } else if (target.innerHTML === 'Tab') {
-      textarea.value += '  ';
+      textarea.setRangeText('  ', [textarea.selectionStart], [textarea.selectionEnd], ['end']);
     } else if (target.classList.contains('&#8593;') || target.classList.contains('&#8595;')) {
-      textarea.value += '';
+      textarea.setRangeText('', [textarea.selectionStart], [textarea.selectionEnd], ['end']);
     } else if (target.classList.contains('&#8592;')) {
       if (textarea.selectionStart === textarea.selectionEnd) {
         textarea.selectionStart -= 1;
@@ -124,7 +123,7 @@ document.querySelector('.keyboard').addEventListener('mousedown', ({ target }) =
         target.classList.add('active-capslock');
       }
     } else if (target.innerHTML !== 'Shift' && target.innerHTML !== 'Enter' && target.innerHTML !== 'Ctrl' && target.innerHTML !== 'Alt') {
-      textarea.value += target.textContent;
+      textarea.setRangeText(target.textContent, [textarea.selectionStart], [textarea.selectionEnd], ['end']);
     }
   }
 });

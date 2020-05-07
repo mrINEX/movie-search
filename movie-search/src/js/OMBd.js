@@ -23,6 +23,7 @@ function getMovies(word) {
             fetch(`${URL_API}?i=${node.imdbID}&apikey=${KEY}`)
               .then((res) => res.json())
               .then((movie) => {
+                // console.log(movie);
                 const cardMovie = new Movie(movie);
                 cardMovie.createMovie();
               });
@@ -52,6 +53,17 @@ function getMovies(word) {
   };
 }
 
+function isNext(response) {
+  return response().then((isCorrect) => {
+    if (isCorrect) {
+      document.querySelectorAll('.movie').forEach((movie) => movie.remove());
+      return true;
+    }
+    return false;
+  });
+}
+
 module.exports = {
   getMovies,
+  isNext,
 };
