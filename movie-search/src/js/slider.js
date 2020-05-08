@@ -34,7 +34,6 @@ function nextMovie(next) {
   if (isEnabled && countHidden.length > 0) {
     isEnabled = false;
     movies[countHidden.length - 1].classList.remove('hidden');
-
     movies.forEach((node) => {
       node.classList.add('from-left');
     });
@@ -76,7 +75,7 @@ function startTouchSwipe(event, next) {
     nextMovie(next);
   }
   startX = event.changedTouches[0].clientX;
-  event.preventDefault();
+  // event.preventDefault();
 }
 
 function runTouchSwipe(event, next) {

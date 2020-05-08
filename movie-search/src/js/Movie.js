@@ -11,7 +11,7 @@ class Movie {
     this.id = imdbID;
   }
 
-  createMovie() {
+  createMovie(detailsMovie) {
     const movie = createElement('div', {
       classList: ['movie', 'movie-opacity'],
     });
@@ -42,17 +42,25 @@ class Movie {
       `,
     });
 
-    movie.append(title);
-    movie.append(poster);
+    const more = createElement('div', {});
+
+    const details = createElement('button', {
+      classList: ['more-button'],
+      innerText: 'more details',
+    });
+
+    movie.append(title, poster, year, rating, more);
     poster.append(posterImg);
-    movie.append(year);
-    movie.append(rating);
+    more.append(details);
     document.querySelector('.movies-block').append(movie);
 
     posterImg.addEventListener('load', () => {
       document.querySelector('.loader').classList.add('hidden');
       movie.classList.remove('movie-opacity');
     });
+
+    more.onclick = detailsMovie;
+    more.ontouchstart = detailsMovie;
   }
 }
 

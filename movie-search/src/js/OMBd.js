@@ -1,4 +1,5 @@
 const { Movie } = require('./Movie');
+const { MovieDetails } = require('./Movie.details');
 
 const KEY = '6bf18ca';
 const URL_API = 'http://www.omdbapi.com/';
@@ -8,8 +9,8 @@ function getMovies(word) {
   let results = 0;
   let allResults = 0;
   return () => {
-    const message = document.querySelector('.not-finded');
     document.querySelector('.keyboard-wrapper').classList.add('hidden');
+    const message = document.querySelector('.not-finded');
     const url = `${URL_API}?s=${word}&page=${page}&apikey=${KEY}`;
     page += 1;
     return fetch(url)
@@ -23,16 +24,14 @@ function getMovies(word) {
             fetch(`${URL_API}?i=${node.imdbID}&apikey=${KEY}`)
               .then((res) => res.json())
               .then((movie) => {
-                // console.log(movie);
                 const cardMovie = new Movie(movie);
-                cardMovie.createMovie();
+                const detailsMovie = new MovieDetails(movie);
+                cardMovie.createMovie(detailsMovie.details());
               });
           });
           document.querySelector('.input-search').value = word;
           const notification = document.querySelector('.notification');
-          if (notification.children.length === 1) {
-            notification.textContent = '';
-          }
+          if (notification.children.length === 1) { notification.textContent = ''; }
           message.innerHTML = `
             Uploaded <strong>${results} movies</strong> from <strong>${allResults}</strong>.
             Page <strong>#${page - 1}</strong>.

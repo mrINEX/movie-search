@@ -8,9 +8,9 @@ const {
 
 window.onload = () => {
   const input = document.querySelector('.input-search');
-  let storageValue = 'dark';
+  let storageValue = 'book';
   let response;
-  let next = getMovies('dark');
+  let next = getMovies('book');
   next();
 
   input.addEventListener('blur', () => {
@@ -89,7 +89,6 @@ window.onload = () => {
   });
 
   const movies = document.querySelector('.movies-block');
-
   movies.addEventListener('mousedown', startSwipe);
   movies.addEventListener('mouseup', (event) => {
     runSwipe(event, next);

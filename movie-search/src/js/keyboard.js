@@ -46,8 +46,8 @@ if (lang === 'ru') {
 document.addEventListener('keydown', (event) => {
   document.querySelector('.input-search').focus();
   const code = document.querySelector(`.${event.code}`);
-  if (code.length) {
-    document.querySelector(`.${event.code}`).classList.add('keyboard-code-active');
+  if (code) {
+    code.classList.add('keyboard-code-active');
   }
   if (event.altKey && event.shiftKey) {
     if (upperCharts[0].innerHTML === 'Ё') {
@@ -68,16 +68,18 @@ document.addEventListener('keydown', (event) => {
 
 document.addEventListener('keyup', (event) => {
   const code = document.querySelector(`.${event.code}`);
-  if (code.length) {
-    document.querySelector(`.${event.code}`).classList.add('keyboard-code-active');
+  if (code) {
+    code.classList.remove('keyboard-code-active');
   }
 });
 
+let currentButton;
 document.querySelector('.keyboard').addEventListener('mousedown', (event) => {
   event.preventDefault();
   const { target } = event;
   if (target.parentNode.classList.contains('button')) {
-    document.querySelector(`.${target.parentNode.classList[1]}`).classList.add('keyboard-code-active');
+    currentButton = document.querySelector(`.${target.parentNode.classList[1]}`);
+    currentButton.classList.add('keyboard-code-active');
 
     switch (target.innerHTML) {
       case 'Backspace':
@@ -103,13 +105,15 @@ document.querySelector('.keyboard').addEventListener('mousedown', (event) => {
         }
         break;
       case '↑':
-        textarea.selectionStart = textarea.selectionEnd;
-        break;
-      case '↓':
+        textarea.select();
         textarea.selectionEnd = textarea.selectionStart;
         break;
+      case '↓':
+        textarea.select();
+        textarea.selectionStart = textarea.selectionEnd;
+        break;
       case '←':
-        if (textarea.selectionStart === textarea.selectionEnd) {
+        if (textarea.selectionStart === textarea.selectionEnd && textarea.selectionStart > 0) {
           textarea.selectionStart -= 1;
           textarea.selectionEnd -= 1;
         } else {
@@ -150,8 +154,6 @@ document.querySelector('.keyboard').addEventListener('mousedown', (event) => {
   }
 });
 
-document.querySelector('.keyboard').addEventListener('mouseup', ({ target }) => {
-  if (target.parentNode.classList.contains('button')) {
-    document.querySelector(`.${target.parentNode.classList[1]}`).classList.remove('keyboard-code-active');
-  }
+document.querySelector('.keyboard').addEventListener('mouseup', () => {
+  currentButton.classList.remove('keyboard-code-active');
 });

@@ -16,7 +16,13 @@ function drawRow(row, position, attach) {
       const span = create('span', 'word');
       if (position[i] === ' ') { span.classList.add('\\'); } else { span.classList.add(`${position[i]}`); }
       span.innerHTML = position[i];
-      if (row[i] === 'MetaLeft') { span.innerHTML = ''; }
+      if (row[i] === 'MetaLeft') {
+        span.innerHTML = '';
+        const img = document.createElement('img');
+        img.setAttribute('src', './src/assets/img/lang.png');
+        img.setAttribute('class', 'event-none lang-earth');
+        dbutt.prepend(img);
+      }
       if (row[i] === 'Enter') { span.classList.add('virtual-enter'); }
       dbutt.append(span);
     } else {
