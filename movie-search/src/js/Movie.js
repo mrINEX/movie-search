@@ -27,7 +27,7 @@ class Movie {
     });
 
     const posterImg = createElement('img', {
-      src: `${this.poster === 'N/A' ? '../src/assets/img/noposter.jpg' : this.poster}`,
+      src: `${this.poster === 'N/A' ? '../movie-search/src/assets/img/noposter.png' : this.poster}`,
     });
 
     const year = createElement('span', {

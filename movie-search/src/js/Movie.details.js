@@ -32,7 +32,7 @@ class MovieDetails {
         classList: ['details__img'],
       });
       const posterImg = createElement('img', {
-        src: `${this.poster === 'N/A' ? '../src/assets/img/noposter.jpg' : this.poster}`,
+        src: `${this.poster === 'N/A' ? '../movie-search/src/assets/img/noposter.png' : this.poster}`,
       });
       imgWrapper.append(posterImg);
 
@@ -50,20 +50,20 @@ class MovieDetails {
       const genreMovie = createElement('div', {
         classList: ['four-column'],
         innerHTML: `
-          <strong>${this.genre}</strong>
-          <strong>${this.released}</strong>
-          <strong>${this.country}</strong>
-          <strong>${this.runtime}</strong>
+          <strong>${this.genre === 'N/A' ? 'no genre' : this.genre}</strong>
+          <strong>${this.released === 'N/A' ? 'no release' : this.released}</strong>
+          <strong>${this.country === 'N/A' ? 'no country' : this.country}</strong>
+          <strong>${this.runtime === 'N/A' ? 'no time' : this.runtime}</strong>
         `,
       });
       const directorMovie = createElement('p', {
-        innerHTML: `<strong>Director:</strong> ${this.director}`,
+        innerHTML: `<strong>Director:</strong> ${this.director === 'N/A' ? 'no director' : this.director}`,
       });
       const actorsMovie = createElement('p', {
-        innerHTML: `<strong>Actors:</strong> ${this.actors}`,
+        innerHTML: `<strong>Actors:</strong> ${this.actors === 'N/A' ? 'no actors' : this.actors}`,
       });
       const plotMovie = createElement('p', {
-        innerHTML: `<strong>Plot:</strong> ${this.plot}`,
+        innerHTML: `<strong>Plot:</strong> ${this.plot === 'N/A' ? 'no plot' : this.plot}`,
       });
       const wrapperAwards = createElement('div', {
         classList: ['wrapper-awards'],
