@@ -10,7 +10,7 @@ module.exports = {
     filename: 'bundle.js',
   },
   mode: 'production', // production development
-  devtool: 'source-map', // none
+  // devtool: 'source-map', // none
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({

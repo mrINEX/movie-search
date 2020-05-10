@@ -2,7 +2,7 @@
     display: flex;
     position: relative;
     overflow: hidden;
-    height: 446px;
+    // height: 446px;
 }
 
 .arrow-left,
@@ -59,7 +59,6 @@
 }
 
 .movie__title {
-    margin-bottom: 10px;
     @include font($size: unset, $weight: bold);
 }
 
