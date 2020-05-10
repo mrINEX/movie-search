@@ -2,7 +2,7 @@ const { Movie } = require('./Movie');
 const { MovieDetails } = require('./Movie.details');
 
 const KEY = '6bf18ca';
-const URL_API = 'http://www.omdbapi.com/';
+const URL_API = 'https://www.omdbapi.com/';
 
 function getMovies(word, isRu) {
   let page = 1;
