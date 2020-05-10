@@ -4,7 +4,7 @@ const { MovieDetails } = require('./Movie.details');
 const KEY = '6bf18ca';
 const URL_API = 'http://www.omdbapi.com/';
 
-function getMovies(word) {
+function getMovies(word, isRu) {
   let page = 1;
   let results = 0;
   let allResults = 0;
@@ -30,22 +30,24 @@ function getMovies(word) {
               });
           });
           document.querySelector('.input-search').value = word;
-          const notification = document.querySelector('.notification');
-          if (notification.children.length === 1) { notification.textContent = ''; }
           message.innerHTML = `
             Uploaded <strong>${results} movies</strong> from <strong>${allResults}</strong>.
             Page <strong>#${page - 1}</strong>.
           `;
+          if (!isRu) {
+            document.querySelector('.notification').textContent = '';
+          }
+          document.querySelector('.error').textContent = '';
         }
         if (results === 0) {
-          document.querySelector('.notification').innerHTML = `
+          document.querySelector('.error').innerHTML = `
             <p style="color: red;">No results for: <strong>"${word}"</strong></p>
           `;
           return false;
         }
         return true;
       }).catch(() => {
-        document.querySelector('.notification').innerHTML = `
+        document.querySelector('.error').innerHTML = `
           <p style="color: red;">No results for: <strong>"${word}"</strong></p>
         `;
       });

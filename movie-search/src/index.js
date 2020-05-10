@@ -1,6 +1,7 @@
 require('./js/create');
 require('./js/keyboard');
 const { translate } = require('./js/translate');
+const { speechInput } = require('./js/speechInput');
 const { getMovies, isNext } = require('./js/OMBd');
 const {
   prevMovie, nextMovie, startSwipe, runSwipe, startTouchSwipe, runTouchSwipe,
@@ -13,12 +14,30 @@ window.onload = () => {
   let next = getMovies('book');
   next();
 
+  document.querySelector('.input-voice').addEventListener('click', () => {
+    document.querySelector('.input-search').focus();
+    const recognition = speechInput();
+    recognition.onend = () => {
+      if (/[а-яА-Я]/.test(input.value)) {
+        translate(input.value).then((word) => {
+          response = getMovies(word, 'ru');
+          isNext(response).then((value) => { if (value) { next = response; } });
+        });
+      } else {
+        response = getMovies(input.value);
+        isNext(response).then((value) => { if (value) { next = response; } });
+      }
+      storageValue = input.value;
+    };
+    recognition.start();
+  });
+
   input.addEventListener('blur', () => {
     const isHide = document.querySelector('.keyboard-wrapper').classList.contains('hidden');
     if (!isHide && storageValue !== input.value) {
       if (/[а-яА-Я]/.test(input.value)) {
         translate(input.value).then((word) => {
-          response = getMovies(word);
+          response = getMovies(word, 'ru');
           isNext(response).then((value) => { if (value) { next = response; } });
         });
       } else {
@@ -37,7 +56,7 @@ window.onload = () => {
       if (storageValue !== input.value && !isHide) {
         if (/[а-яА-Я]/.test(input.value)) {
           translate(input.value).then((word) => {
-            response = getMovies(word);
+            response = getMovies(word, 'ru');
             isNext(response).then((value) => { if (value) { next = response; } });
           });
         } else {
@@ -54,7 +73,7 @@ window.onload = () => {
   input.addEventListener('change', ({ target }) => {
     if (/[а-яА-Я]/.test(target.value)) {
       translate(target.value).then((word) => {
-        response = getMovies(word);
+        response = getMovies(word, 'ru');
         isNext(response).then((value) => { if (value) { next = response; } });
       });
     } else {
@@ -68,7 +87,7 @@ window.onload = () => {
     if (!isHide && storageValue !== input.value) {
       if (/[а-яА-Я]/.test(input.value)) {
         translate(input.value).then((word) => {
-          response = getMovies(word);
+          response = getMovies(word, 'ru');
           isNext(response).then((value) => { if (value) { next = response; } });
         });
       } else {

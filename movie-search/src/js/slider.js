@@ -75,7 +75,7 @@ function startTouchSwipe(event, next) {
     nextMovie(next);
   }
   startX = event.changedTouches[0].clientX;
-  // event.preventDefault();
+  event.preventDefault();
 }
 
 function runTouchSwipe(event, next) {

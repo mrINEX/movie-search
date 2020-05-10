@@ -70,7 +70,7 @@ class MovieDetails {
       });
       const awardsMovie = createElement('div', {
         classList: ['movie__rating'],
-        innerHTML: `<p><strong>Awards: </strong>${this.awards}</p>`,
+        innerHTML: `<p><strong>Awards: </strong>${this.awards === 'N/A' ? 'no awards' : this.awards}</p>`,
       });
       const ratingMovie = createElement('div', {
         classList: ['movie__rating'],
@@ -114,13 +114,14 @@ class MovieDetails {
       detailWrapperCenter.append(detailWrapperLeft, detailWrapperRight);
       detailsWrapper.append(detailWrapperCenter);
 
-
-      close.onclick = () => {
-        main.classList.remove('event-none');
+      const del = () => {
+        main.classList.remove('event-none', 'half-hidden');
         detailsWrapper.remove();
       };
-      document.querySelector('body').append(detailsWrapper);
-      main.classList.add('event-none');
+      close.onclick = del;
+      close.ontouchstart = del;
+      main.after(detailsWrapper);
+      main.classList.add('event-none', 'half-hidden');
 
       posterImg.addEventListener('load', () => {
         detailsWrapper.classList.remove('movie-opacity');

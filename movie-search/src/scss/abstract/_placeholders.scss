@@ -4,13 +4,14 @@
 
 %custom-scroll {
     &::-webkit-scrollbar {
-      width: 5px;
+      width: 6px;
+      height: 2px;
     }
     &::-webkit-scrollbar-track {
-      box-shadow: inset 0 0 1px grey;
+      box-shadow: inset 0 0 1px rgb(130, 203, 221);
     }
     &::-webkit-scrollbar-thumb {
-      background: black;
+      background: rgb(13, 78, 75);
       border-radius: 10px;
     }
 }

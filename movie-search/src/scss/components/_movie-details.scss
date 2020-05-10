@@ -48,10 +48,14 @@
 .four-column {
     display: flex;
     * {
-        background-color: #b9c9dc;
+        border: 1px solid #b9c9dc;
+        padding: 4px;
         margin: 1px;
     }
     justify-content: space-between;
+    @include media-mobiles-small() {
+        flex-direction: column;
+    }
 }
 
 .wrapper-awards {
@@ -60,4 +64,12 @@
 
 .rating_title {
     display: flex;
+}
+
+.half-hidden {
+    opacity: .5;
+    -webkit-transition: opacity 150ms;
+    -moz-transition: opacity 150ms;
+    -ms-transition: opacity 150ms;
+    transition: opacity 150ms;
 }

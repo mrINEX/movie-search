@@ -8,7 +8,7 @@ function translate(text) {
     .then((data) => {
       document.querySelector('.input-search').value = data.text;
       document.querySelector('.notification').innerHTML = `
-        Translated <strong>${text}</strong>. Showing movies for <strong>${data.text[0]}</strong>.
+        Translated: <strong>${text}.</strong> Showing movies for <strong>${data.text[0]}.</strong>
       `;
       return data.text[0];
     });

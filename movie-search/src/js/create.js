@@ -43,6 +43,10 @@ const inputKeyboard = createElement('img', {
   src: './src/assets/img/keyboard.png',
 });
 
+const inputVoice = createElement('div', {
+  classList: ['input-voice'],
+});
+
 inputKeyboard.onmousedown = (event) => {
   event.preventDefault();
   const keyboard = document.querySelector('.keyboard-wrapper');
@@ -64,9 +68,11 @@ const inputSearch = createElement('input', {
 const notFinded = createElement('div', {
   classList: ['not-finded'],
 });
-
 const notification = createElement('div', {
   classList: ['notification'],
+});
+const error = createElement('div', {
+  classList: ['error'],
 });
 
 const moviesBlock = createElement('div', {
@@ -113,8 +119,8 @@ document.querySelector('body').append(header);
 
 document.querySelector('body').append(main);
 main.append(searchBlock);
-searchBlock.append(inputBlock, notFinded, notification);
-inputBlock.append(inputSearch, inputKeyboard, inputButton);
+searchBlock.append(notFinded, notification, error, inputBlock);
+inputBlock.append(inputSearch, inputKeyboard, inputVoice, inputButton);
 main.append(moviesBlock);
 moviesBlock.append(loader, arrowLeft, arrowRight);
 
