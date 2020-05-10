@@ -32,7 +32,7 @@ class MovieDetails {
         classList: ['details__img'],
       });
       const posterImg = createElement('img', {
-        src: `${this.poster === 'N/A' ? '../movie-search/src/assets/img/noposter.png' : this.poster}`,
+        src: `${this.poster === 'N/A' ? '../src/assets/img/noposter.png' : this.poster}`,
       });
       imgWrapper.append(posterImg);
 
