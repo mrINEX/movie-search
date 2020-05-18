@@ -101,10 +101,10 @@ window.onload = () => {
   });
 
   document.querySelector('.arrow-left').addEventListener('click', () => {
-    prevMovie(next);
+    nextMovie(next);
   });
   document.querySelector('.arrow-right').addEventListener('click', () => {
-    nextMovie(next);
+    prevMovie(next);
   });
 
   const movies = document.querySelector('.movies-block');
